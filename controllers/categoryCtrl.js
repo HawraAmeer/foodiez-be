@@ -40,9 +40,8 @@ exports.categoryList = async (req, res, next) => {
       include: {
         model: Ingredient,
         as: "ingredients",
-        attributes: ["id"],
-      },
-    });
+        attributes: ["id", "name", "image", "categoryId"],
+    }});
     res.json(categories);
   } catch (error) {
     next(error);
