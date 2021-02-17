@@ -14,8 +14,6 @@ router.param("ingredientId", async (req, res, next, ingredientId) => {
   } else next({ status: 404, message: "Ingredient Not Found." });
 });
 
-router.post("/", upload.single("image"), createIngredient);
-
 router.get("/", ingredientCtrl.ingredientList);
 
 router.get("/:ingredientId", ingredientCtrl.ingredientDetail);

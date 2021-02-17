@@ -11,7 +11,7 @@ router.param("recipeId", async (req, res, next, recipeId) => {
   } else next({ status: 404, message: "Recipe Not Found." });
 });
 
-router.post("/", upload.single("image"), createRecipe);
+router.post("/", upload.single("image"), recipeCtrl.createRecipe);
 
 router.get("/", recipeCtrl.recipeList);
 

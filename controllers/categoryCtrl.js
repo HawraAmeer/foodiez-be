@@ -20,6 +20,19 @@ exports.createCategory = async (req, res, next) => {
   }
 };
 
+exports.createIngredient = async (req, res, next) => {
+  try {
+    req.body.categoryId = req.category.id;
+    if (req.file) {
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    }
+    const newIngredient = await Ingredient.create(req.body);
+    res.status(201).json(newIngredient);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.categoryList = async (req, res, next) => {
   try {
     const categories = await Category.findAll({
