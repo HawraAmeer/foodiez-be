@@ -1,4 +1,4 @@
-const { Recipe } = require("../db/models");
+const { Recipe, Ingredient } = require("../db/models");
 
 exports.fetchRecipe = async (recipeId, next) => {
   try {
@@ -24,11 +24,10 @@ exports.recipeList = async (req, res, next) => {
   try {
     const recipes = await Recipe.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
-      //   include: {
-      //     model: Category,
-      //     as: "category",
-      //     attributes: ["id"],
-      //   },
+      include: {
+        model: Ingredient,
+        as: "ingredients",
+      },
     });
     res.json(recipes);
   } catch (error) {

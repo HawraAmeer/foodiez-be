@@ -3,6 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
+const Ingredient = require("./Ingredient");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
@@ -51,6 +52,15 @@ db.Category.hasMany(db.Ingredient, {
 db.Ingredient.belongsTo(db.Category, {
   foreignKey: "categoryId",
   as: "category",
+});
+
+db.Recipe.belongsToMany(db.Ingredient, {
+  through: "RecipeIngredient",
+  as: "ingredients",
+});
+db.Ingredient.belongsToMany(db.Recipe, {
+  through: "RecipeIngredient",
+  as: "recipes",
 });
 
 module.exports = db;
