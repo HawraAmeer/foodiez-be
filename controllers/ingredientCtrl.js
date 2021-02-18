@@ -2,7 +2,16 @@ const { Recipe, Ingredient } = require("../db/models");
 
 exports.fetchIngredient = async (ingredientId, next) => {
   try {
-    return await Ingredient.findByPk(ingredientId);
+    return await Ingredient.findByPk(ingredientId, {
+      include: {
+        model: Recipe,
+        as: "recipes",
+        attributes: ["id"],
+        through: {
+          attributes: ["recipeId", "ingredientId"],
+        },
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -15,6 +24,10 @@ exports.ingredientList = async (req, res, next) => {
       include: {
         model: Recipe,
         as: "recipes",
+        attributes: ["id"],
+        through: {
+          attributes: ["recipeId", "ingredientId"],
+        },
       },
     });
     res.json(ingredients);
