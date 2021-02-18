@@ -11,7 +11,7 @@ router.param("categoryId", async (req, res, next, categoryId) => {
   } else next({ status: 404, message: "Category Not Found." });
 });
 
-router.post("/", upload.single("image"), categoryCtrl.createCategory);
+router.post("/", categoryCtrl.createCategory);
 
 router.post(
   "/:categoryId/ingredients",

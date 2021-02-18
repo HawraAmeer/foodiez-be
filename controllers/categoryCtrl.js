@@ -10,9 +10,6 @@ exports.fetchCategory = async (categoryId, next) => {
 
 exports.createCategory = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
-    }
     const newCategory = await Category.create(req.body);
     res.status(201).json(newCategory);
   } catch (error) {
@@ -41,7 +38,8 @@ exports.categoryList = async (req, res, next) => {
         model: Ingredient,
         as: "ingredients",
         attributes: ["id", "name", "image", "categoryId"],
-    }});
+      },
+    });
     res.json(categories);
   } catch (error) {
     next(error);
