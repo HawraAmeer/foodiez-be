@@ -23,7 +23,7 @@ exports.createRecipe = async (req, res, next) => {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
     const newRecipe = await Recipe.create(req.body);
-    newRecipe.addIngredients(req.body.ingredients);
+    newRecipe.addIngredients(req.body.ingredients.split(","));
     res.status(201).json(newRecipe);
   } catch (error) {
     next(error);
